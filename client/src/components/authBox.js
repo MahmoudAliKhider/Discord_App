@@ -17,7 +17,7 @@ const AuthBox = (props) => {
                 sx={
                     {
                         width: 540,
-                        height: 300,
+                        height: 350,
                         bgcolor: '#FBF9F1',
                         borderRadius: "7px",
                         boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20% )",
