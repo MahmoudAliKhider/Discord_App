@@ -1,8 +1,9 @@
 import React from 'react'
+import AuthBox from "../../components/authBox";
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <AuthBox>Login</AuthBox>
   )
 }
 
