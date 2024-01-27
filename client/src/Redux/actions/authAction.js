@@ -19,12 +19,13 @@ const setUserDetails = (userDetails) => {
 }
 const login = (userDetails, navigate) => {
     return async (dispatch) => {
-        const res = await api.login(userDetails);
+        const response = await api.login(userDetails);
+        console.log(response);
 
-        if (res.error) {
+        if (response.error) {
 
         } else {
-            const { userDetails } = res?.data;
+            const { userDetails } = response?.data;
             localStorage.setItem('user', JSON.stringify(userDetails));
             dispatch(setUserDetails(userDetails));
             navigate('/dashboard')

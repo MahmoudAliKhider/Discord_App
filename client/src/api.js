@@ -1,28 +1,28 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseUrl: "http://localhost/5050",
-    timeout: 1000
+  baseURL: "http://localhost:5050/api",
+  timeout: 5000
 })
 
 export const login = async (data) => {
-    try {
-        return await apiClient.post('/api/auth/login', data)
-    } catch (exeption) {
-        return {
-            error: true,
-            exeption
-        }
-    }
-}
+  try {
+    return await apiClient.post("/auth/login", data);
+  } catch (exception) {
+    return {
+      error: true,
+      exception,
+    };
+  }
+};
 
 export const register = async (data) => {
-    try {
-        return await apiClient.post('/api/auth/register', data)
-    } catch (exeption) {
-        return {
-            error: true,
-            exeption
-        }
+  try {
+    return await apiClient.post('/auth/register', data)
+  } catch (exception) {
+    return {
+      error: true,
+      exception,
     }
+  }
 }
