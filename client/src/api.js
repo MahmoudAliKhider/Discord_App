@@ -5,7 +5,7 @@ const apiClient = axios.create({
     timeout: 1000
 })
 
-export const Login = async (data) => {
+export const login = async (data) => {
     try {
         return await apiClient.post('/api/auth/login', data)
     } catch (exeption) {
@@ -16,7 +16,7 @@ export const Login = async (data) => {
     }
 }
 
-export const Register = async (data) => {
+export const register = async (data) => {
     try {
         return await apiClient.post('/api/auth/register', data)
     } catch (exeption) {
