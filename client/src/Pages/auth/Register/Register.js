@@ -4,22 +4,29 @@ import { Typography } from '@mui/material';
 import RegisterInput from './RegisterInput';
 import RegisterFooter from './RegisterFooter';
 import { validateRegisterForm } from "../../../utils/validator";
+import { connect } from "react-redux"
+import { getActions } from "../../../Redux/actions/authAction";
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Register = ({ register }) => {
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [isFormValidate, setIsFormValidate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsFormValidate(validateRegisterForm({ mail, password, username }))
   }, [mail, password, isFormValidate]);
 
   const handleRegister = () => {
-    console.log(mail)
-    console.log(password)
-    console.log(username)
+    const userDetails = {
+      mail,
+      username,
+      password
+    }
+    register(userDetails, navigate)
   }
 
   return (
@@ -40,4 +47,9 @@ const Register = () => {
   )
 }
 
-export default Register
+const mapActionToProps = (dispatch) => {
+  return {
+    ...getActions(dispatch),
+  }
+}
+export default connect(null, mapActionToProps)(Register);
