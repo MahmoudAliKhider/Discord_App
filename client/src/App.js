@@ -17,8 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route path="/dashbord" element={<Dashboard />} />
-
+          <Route path="/dashboard" element={<Dashboard />} />
+          
         </Routes>
       </BrowserRouter>
       <AlertNotification />

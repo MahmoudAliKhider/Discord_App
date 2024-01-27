@@ -1,5 +1,5 @@
 import * as api from '../../api';
-
+import { openAlertMessage } from './alertAction'
 export const authActions = {
     SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
 };
@@ -23,7 +23,7 @@ const login = (userDetails, navigate) => {
         console.log(response);
 
         if (response.error) {
-
+            dispatch(openAlertMessage(response?.exception?.response?.data))
         } else {
             const { userDetails } = response?.data;
             localStorage.setItem('user', JSON.stringify(userDetails));
@@ -35,12 +35,12 @@ const login = (userDetails, navigate) => {
 
 const register = (userDetails, navigate) => {
     return async (dispatch) => {
-        const res = await api.register(userDetails);
+        const response = await api.register(userDetails);
 
-        if (res.error) {
-
+        if (response.error) {
+            dispatch(openAlertMessage(response?.exception?.response?.data))
         } else {
-            const { userDetails } = res?.data;
+            const { userDetails } = response?.data;
             localStorage.setItem('user', JSON.stringify(userDetails));
             dispatch(setUserDetails(userDetails));
             navigate('/dashboard')

@@ -1,31 +1,29 @@
-import React from 'react'
-import Alert from '@mui/material/Alert';
-import Snakbare from '@mui/material/Snackbar';
-import { connect } from 'react-redux';
+import React from "react";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import { useDispatch, useSelector } from "react-redux";
 import { getActions } from "../Redux/actions/alertAction";
 
 const AlertNotification = () => {
-    
-    return (
-        <Snakbare
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            open
-            onClose={() => { }}
+  const dispatch = useDispatch();
+  const { showAlertMessage, alertMessageContent } = useSelector(state => state.alert);
 
-        >
-            <Alert severity='info'>Message Info </Alert>
-        </Snakbare>
-    )
-}
+  const { closeAlertMessage, openAlertMessage } = getActions(dispatch);
 
-const mapStoreStateToProps = ({ alert }) => {
-    return {
-        ...alert,
-    }
-}
-const mapActionToProps = (dispatch) => {
-    return {
-        ...getActions(dispatch)
-    }
-}
-export default connect(mapStoreStateToProps, mapActionToProps)(AlertNotification)
+  const handleClose = () => {
+      closeAlertMessage();
+  };
+
+  return (
+    <Snackbar
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      open={showAlertMessage}
+      onClose={handleClose}
+      autoHideDuration={6000}
+    >
+      <Alert severity="info">{alertMessageContent}</Alert>
+    </Snackbar>
+  );
+};
+
+export default AlertNotification;
