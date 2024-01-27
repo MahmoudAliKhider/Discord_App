@@ -17,13 +17,13 @@ const AuthBox = (props) => {
                 sx={
                     {
                         width: 540,
-                        height: 350,
-                        bgcolor: '#FBF9F1',
+                        height: 380,
+                        bgcolor: '#fff',
                         borderRadius: "7px",
-                        boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20% )",
+                        boxShadow: "8px 4px 10px 6px rgb(0 0 0 / 20% )",
                         display: "flex",
                         flexDirection: "column",
-                        padding: "25px"
+                        padding: "20px"
                     }
                 }
             >

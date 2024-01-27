@@ -5,20 +5,20 @@ import CustomPrimaryButton from '../../../components/CustomPrimaryButton'
 import RedirectInfo from '../../../components/RedirectInfo'
 import { Tooltip } from '@mui/material';
 
-const LoginPageFooter = ({ handleLogin, isFormValid }) => {
+const RegisterFooter = ({ handleRegister, isFormValid }) => {
 
     const navigate = useNavigate();
 
     const handelPushToRegisterPage = () => {
-        navigate('/register')
+        navigate('/login')
     };
 
     const getFormNotValidMessage = () => {
-        return "Enter Correct Email Address and Password should contain between 5  and 16 characters"
+        return "Enter Correct Email Address and Username shoud contains between 3 to 12 and Password  should contain between 5  and 16 characters"
     };
 
     const getFormValidMessage = () => {
-        return "press to login...!"
+        return "press to register...!"
     };
 
     return (
@@ -29,17 +29,17 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
 
                 <div>
                     <CustomPrimaryButton
-                        label="Login"
-                        additionalStyles={{ marginTop: "60px" }}
+                        label="Register"
+                        additionalStyles={{ marginTop: "16px" }}
                         disabled={!isFormValid}
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                     />
                 </div>
             </Tooltip>
 
             <RedirectInfo
-                text="need an Account? "
-                redirectText="create account"
+                text=" "
+                redirectText="Already have an account ?"
                 additionalStyles={{ marginTop: "5px" }}
                 redirectHandler={handelPushToRegisterPage}
             />
@@ -47,4 +47,4 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
     )
 }
 
-export default LoginPageFooter
+export default RegisterFooter

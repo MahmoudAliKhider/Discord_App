@@ -6,13 +6,13 @@ const Wrapper = styled('div')({
     justifyContent: 'center',
     flexDirection: 'column',
     width: '100%',
-    marginTop:"2%",
+    marginTop:"1px",
 })
 const Lable = styled('p')({
     color: "#365486",
     textTransform: 'uppercase',
-    fontWeight: "500",
-    fontSize: "15px"
+    fontWeight: "600",
+    fontSize: "13px"
 })
 const Input = styled('input')({
     flexGrow: 1,

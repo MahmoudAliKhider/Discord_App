@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography } from "@mui/material";
 
 const LoginHeader = () => {
+    
     return (
         <>
             <Typography variant='h5' sx={{ color: "#092635" }}>
