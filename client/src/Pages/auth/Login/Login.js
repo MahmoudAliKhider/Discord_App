@@ -1,31 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import AuthBox from "../../../components/authBox";
+// components/Login.js
+import React, { useEffect, useState } from 'react';
+import AuthBox from '../../../components/authBox';
 import LoginHeader from './LoginHeader';
 import LoginPageInput from './LoginPageInput';
 import LoginPageFooter from './LoginPageFooter';
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from 'react-redux';
 import { validateLoginForm } from '../../../utils/validator';
-import { getActions } from "../../../Redux/actions/authAction";
+import { getActions } from '../../../Redux/actions/authAction';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ login }) => {
+const Login = () => {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
-
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const userDetails = useSelector((state) => state.auth.userDetails);
+
   useEffect(() => {
-    setIsFormValid(validateLoginForm({ mail, password }))
-  }, [mail, password, setIsFormValid]);
+    setIsFormValid(validateLoginForm({ mail, password }));
+  }, [mail, password]);
 
   const handleLogin = () => {
-    const useDetails = {
+    const userDetails = {
       mail,
-      password
+      password,
+    };
+    const { login } = getActions(dispatch);
+    login(userDetails, navigate);
+  };
+
+
+  useEffect(() => {
+    if (userDetails) {
+      localStorage.setItem('user', JSON.stringify(userDetails));
+      navigate('/dashboard');
     }
-    login(useDetails, navigate)
-  }
+  }, [userDetails]);
+
   return (
     <AuthBox>
       <LoginHeader />
@@ -37,12 +51,7 @@ const Login = ({ login }) => {
       />
       <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
     </AuthBox>
-  )
-}
+  );
+};
 
-const mapActionToProps = (dispatch) => {
-  return {
-    ...getActions(dispatch),
-  }
-}
-export default connect(null, mapActionToProps)(Login);
+export default Login;
