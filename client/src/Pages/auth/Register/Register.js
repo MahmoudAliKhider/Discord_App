@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getActions } from "../../../Redux/actions/authAction";
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({ register }) => {
+const Register = () => {
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
