@@ -5,6 +5,7 @@ import './App.css';
 import Login from './Pages/auth/Login/Login';
 import Register from './Pages/auth/Register/Register';
 import Dashboard from './Pages/Dashbord/dashbord';
+import AlertNotification from './components/AlertNotification';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      <AlertNotification />
     </>
   );
 }
