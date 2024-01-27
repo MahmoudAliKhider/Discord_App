@@ -16,7 +16,7 @@ const loginSchema = Joi.object({
     mail: Joi.string().email().required(),
 })
 
-router.post('/signup', validate.body(registerSchema), register);
+router.post('/register', validate.body(registerSchema), register);
 router.post('/login', validate.body(loginSchema), login);
 
 
