@@ -2,6 +2,7 @@ import React from 'react'
 import Button from "@mui/material/Button";
 import { Typography } from '@mui/material'
 import Avatar from '../../../../components/Avatar';
+import OnlineIndecator from './OnlineIndecator';
 
 const FriendsListItem = ({ id, username, isOnline }) => {
     return (
@@ -30,6 +31,7 @@ const FriendsListItem = ({ id, username, isOnline }) => {
                 variant='subtitle1'
                 align='left'
             >{username}</Typography>
+            {isOnline && <OnlineIndecator />}
         </Button>
     )
 }
