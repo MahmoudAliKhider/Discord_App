@@ -14,7 +14,7 @@ apiClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-},(err) =>{
+}, (err) => {
   return Promise.reject(err);
 })
 
@@ -33,6 +33,18 @@ export const register = async (data) => {
   try {
     return await apiClient.post('/auth/register', data)
   } catch (exception) {
+    return {
+      error: true,
+      exception,
+    }
+  }
+}
+
+export const sendFriendInvitation = async (data) => {
+  try {
+    return await apiClient.post("/friend-invitation/invite", data)
+  } catch (exception) {
+    checkResponseCode(exception)
     return {
       error: true,
       exception,
