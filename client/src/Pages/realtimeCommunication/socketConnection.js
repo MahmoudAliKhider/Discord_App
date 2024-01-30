@@ -5,7 +5,7 @@ let socket = null;
 export const connectWithSocketServer = () => {
     socket = io('http://localhost:5050');
 
-    socket.on('connection', () => {
+    socket.on('connect', () => {
         console.log('successfully connected with socket');
         console.log(socket.id);
     })

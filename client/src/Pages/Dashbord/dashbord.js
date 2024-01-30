@@ -7,6 +7,7 @@ import AppBar from "./AppBar/AppBar";
 import { Logout } from "../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { getActions } from "../../Redux/actions/authAction";
+import { connectWithSocketServer } from "../realtimeCommunication/socketConnection";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -16,7 +17,7 @@ const Wrapper = styled("div")({
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { setUserDetails } = getActions(dispatch); // Using getActions to get setUserDetails
+  const { setUserDetails } = getActions(dispatch); 
 
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
@@ -24,7 +25,8 @@ const Dashboard = () => {
     if (!userDetails) {
       Logout();
     } else {
-      setUserDetails(JSON.parse(userDetails)); // Dispatching setUserDetails using getActions
+      setUserDetails(JSON.parse(userDetails)); 
+      connectWithSocketServer();
     }
   }, []);
 
