@@ -26,7 +26,7 @@ const Dashboard = () => {
       Logout();
     } else {
       setUserDetails(JSON.parse(userDetails)); 
-      connectWithSocketServer();
+      connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
 
