@@ -1,6 +1,7 @@
 const verifyTokenSocket = require('./middlewares/authSocket')
 const { disconnectHandler } = require('./socketHandelar/disconnectHandler')
 const { newConnectionHandler } = require('./socketHandelar/newConnectionHandelar')
+const serverStore = require('./serverStore');
 
 const registerSocketServer = (server) => {
     const io = require('socket.io')(server, {
@@ -10,6 +11,8 @@ const registerSocketServer = (server) => {
         }
     })
 
+    serverStore.setSocketServerInstance(io);
+    
     io.use((socket, next) => {
         verifyTokenSocket(socket, next)
     })
@@ -20,7 +23,7 @@ const registerSocketServer = (server) => {
 
         newConnectionHandler(socket, io)
 
-        socket.on("disconnect", () =>{
+        socket.on("disconnect", () => {
             disconnectHandler(socket)
         })
     })
