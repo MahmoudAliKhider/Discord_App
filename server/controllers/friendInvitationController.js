@@ -1,5 +1,5 @@
 const User = require("../models/user");
-
+const Friends = require("../models/friendInvitation");
 exports.postInvite = async (req, res) => {
 
     const { targetMailAddress } = req.body;
@@ -15,5 +15,29 @@ exports.postInvite = async (req, res) => {
         return res.status(404).send(`friends of ${targetMailAddress} is Not found`);
     }
 
-    return res.send("Okkkkkkkkkkkk")
+    // check invitation send
+    const invitationAlreadySend = await Friends.findOne({
+        senderId: userId,
+        receiverId: targitUser._id,
+    });
+
+    if (invitationAlreadySend) {
+        return res.status(409).send("Invitation already sent");
+    }
+
+    // check if user send invitation already friends
+    const userAlreadyFriend = targitUser.friends.find(
+        (friendId) => friendId.toString() === userId.toString()
+    );
+
+    if (userAlreadyFriend) {
+        return res.status(409).send("Frends already Added , please check friend  List");
+    }
+
+    const newInvitation = await Friends.create({
+        senderId: userId,
+        receiverId: targitUser._id,
+    })
+
+    return res.status(201).send("Invitation has been send")
 }
