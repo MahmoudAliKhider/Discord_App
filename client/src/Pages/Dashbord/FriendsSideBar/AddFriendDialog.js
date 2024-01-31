@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { validateMail } from '../../../utils/validator';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,16 +9,26 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 import InputWithInput from '../../../components/inputWithInput';
 import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
+import { getActions } from '../../../Redux/actions/friendsAction';
 
 const AddFriendDialog = ({
     isDialogOpen,
     closeDialogHandelar,
-    sendFreiendInvitation = () => { }
 }) => {
+
+    const dispatch = useDispatch()
+    const sendFriendInvitation = getActions(dispatch).sendFriendInvitation;
+
     const [mail, setMail] = useState('');
     const [isFormValid, setFormValid] = useState('');
 
-    const handelSendInvitation = () => { }
+    const handelSendInvitation = () => {
+        sendFriendInvitation({
+            targetMailAddress: mail,
+        },
+            handelCloseDialog
+        )
+    }
 
     const handelCloseDialog = () => {
         closeDialogHandelar();
