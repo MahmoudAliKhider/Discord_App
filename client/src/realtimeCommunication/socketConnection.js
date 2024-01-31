@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { sendPendungFriendinvitation } from "../Redux/actions/friendsAction";
+import { setPendingFriendsInvitations } from "../Redux/actions/friendsAction";
 import store from "../Redux/store";
 
 let socket = null;
@@ -22,6 +22,6 @@ export const connectWithSocketServer = (userDetails) => {
         const { pendingInvitations } = data;
         console.log("friend invitation")
         console.log(pendingInvitations)
-        store.dispatch(sendPendungFriendinvitation(pendingInvitations));
+        store.dispatch(setPendingFriendsInvitations(pendingInvitations));
     })
 }

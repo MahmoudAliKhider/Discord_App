@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { styled } from "@mui/system";
 import PendingInvitationsListItem from "./PendingInvitationsListItem";
 import { useSelector } from "react-redux";
@@ -10,13 +10,20 @@ const MainContainer = styled('div')({
   flexDirection: 'column',
   alignItems: 'center',
   overflow: "auto",
-})
+});
 
-const PendinginvitionList = () => {
-  const pendingFriendsInvitations = useSelector(
-    (state) => state.friends.pendingFriendsInvitations
-  );
-  
+const PendingInvitationsList = () => {
+  const pendingFriendsInvitations = useSelector(state => state.friends.pendingFriendsInvitations);
+
+  console.log("Component Rendering. pendingFriendsInvitations:", pendingFriendsInvitations);
+
+  if (!pendingFriendsInvitations) {
+    // Handle the case where data is still loading or not available
+    return <p>Loading...</p>;
+  }
+
+  console.log("Rendering with data");
+
   return (
     <MainContainer>
       {pendingFriendsInvitations.map((invitation) => (
@@ -28,7 +35,7 @@ const PendinginvitionList = () => {
         />
       ))}
     </MainContainer>
-  )
-}
+  );
+};
 
-export default PendinginvitionList
+export default PendingInvitationsList;

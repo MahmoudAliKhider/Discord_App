@@ -1,25 +1,26 @@
-import { friendsAction } from "../actions/friendsAction";
+import { friendsActions } from "../actions/friendsAction";
 
 const initState = {
     friends: [],
-    pendingFriendsInvitations: [],
-    onLineUser: []
-}
+    pendingFriendsInvitations: [], 
+    onlineUsers: [],
+};
+
 
 const reducer = (state = initState, action) => {
-    switch (action.action) {
-        case friendsAction.SET_PENDING_FRIEND_INVITATION:
+    switch (action.type) {
+        case friendsActions.SET_PENDING_FRIENDS_INVITATION:
             return {
                 ...state,
                 pendingFriendsInvitations: action.pendingFriendsInvitations,
             }
 
-        case friendsAction.SET_FRIEND:
+        case friendsActions.SET_FRIEND:
             return {
                 ...state,
                 friends: action.friends
             }
-        case friendsAction.SET_ONLINE_USER:
+        case friendsActions.SET_ONLINE_USER:
             return {
                 ...state,
                 onlineUser: action.onlineUser

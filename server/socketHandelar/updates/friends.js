@@ -4,7 +4,7 @@ const serverStore = require('../../serverStore');
 
 const updateFriendsPendingInvitation = async (userId) => {
     try {
-        const pendingInvitations = await Friends.findOne({
+        const pendingInvitations = await Friends.find({
             receiverId: userId
         }).populate("senderId", "_id username mail")
 
