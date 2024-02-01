@@ -47,7 +47,7 @@ exports.postInvite = async (req, res) => {
 
 exports.postAccept = async (req, res) => {
     return res.send("Accepted")
-}
+};
 
 exports.postReject = async (req, res) => {
     try {
