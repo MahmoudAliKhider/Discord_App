@@ -46,7 +46,36 @@ exports.postInvite = async (req, res) => {
 }
 
 exports.postAccept = async (req, res) => {
-    return res.send("Accepted")
+    try {
+        const { id } = req.body;
+        const invitation = await Friends.findById(id);
+
+        if (!invitation) {
+            return res.status(401).send("Error Occured , Please Try Again");
+        }
+
+        const { senderId, receiverId } = invitation;
+
+        const senderUser = await User.findById(senderId);
+        senderUser.friends = [...senderUser.friends, receiverId];
+
+        const receiverUser = await User.findById(receiverId);
+        receiverUser.friends = [...receiverUser.friends, senderId];
+
+        await senderUser.save();
+        await receiverUser.save();
+
+        //delete Invitation.
+        await Friends.findByIdAndDelete(id);
+
+        // update list of friend initation
+        friendsUpdate.updateFriendsPendingInvitation(receiverId.toString());
+        return res.status(200).send("Friends successfully Added");
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Something went Wrong please Try again");
+    }
 };
 
 exports.postReject = async (req, res) => {
