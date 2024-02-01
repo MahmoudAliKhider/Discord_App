@@ -22,6 +22,42 @@ const updateFriendsPendingInvitation = async (userId) => {
     }
 }
 
+const updateFriends = async (userId) => {
+    try {
+
+        //get active connection
+        const receiveList = serverStore.getActionConnections(userId);
+
+        if (receiveList.length > 0) {
+            const user = await User.findById(userId, { _id: 1, friends: 1 }).populate(
+                "friends",
+                "_id username mail"
+            );
+
+            if (user) {
+                const friendsList = user.friends.map((f) => {
+                    return {
+                        id: f._id,
+                        mail: f.mail,
+                        username: f.username
+                    }
+                })
+            }
+
+            // get io server
+            receiveList.forEach((resreveSocketId) => {
+                io.to(resreveSocketId).emit("friends-list", {
+                    friends: friendsList ? friendsList : [],
+                });
+            })
+
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    updateFriendsPendingInvitation
+    updateFriendsPendingInvitation,
+    updateFriends,
 }

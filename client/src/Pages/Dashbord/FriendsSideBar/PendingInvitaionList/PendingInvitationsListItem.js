@@ -3,7 +3,7 @@ import { Tooltip, Typography, Box } from "@mui/material";
 
 import Avatar from "./../../../../components/Avatar";
 import InvitationDecisionButtons from "./InvitationDecisionButtons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getActions } from './../../../../Redux/actions/friendsAction';
 
 const PendingInvitationsListItem = ({
