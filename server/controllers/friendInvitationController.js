@@ -44,3 +44,27 @@ exports.postInvite = async (req, res) => {
     friendsUpdate.updateFriendsPendingInvitation(targitUser._id.toString())
     return res.status(201).send("Invitation has been send")
 }
+
+exports.postAccept = async (req, res) => {
+    return res.send("Accepted")
+}
+
+exports.postReject = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const { userId } = req.user;
+
+        const invitaionExists = await Friends.exists({ _id: id });
+
+        if (invitaionExists) {
+            await Friends.findByIdAndDelete(id)
+        }
+
+        friendsUpdate.updateFriendsPendingInvitation(userId);
+        return res.status(200).send("Invitation succesfully rejected");
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Something went Wrong please Try again");
+    }
+}
