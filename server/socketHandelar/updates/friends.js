@@ -42,14 +42,18 @@ const updateFriends = async (userId) => {
                         username: f.username
                     }
                 })
+
+                const io = serverStore.getSocketServerInstance();
+
+                // get io server
+                receiveList.forEach((resreveSocketId) => {
+                    io.to(resreveSocketId).emit("friends-list", {
+                        friends: friendsList ? friendsList : [],
+                    });
+                })
             }
 
-            // get io server
-            receiveList.forEach((resreveSocketId) => {
-                io.to(resreveSocketId).emit("friends-list", {
-                    friends: friendsList ? friendsList : [],
-                });
-            })
+
 
         }
     } catch (error) {
