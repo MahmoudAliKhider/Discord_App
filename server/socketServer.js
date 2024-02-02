@@ -1,6 +1,7 @@
-const verifyTokenSocket = require('./middlewares/authSocket')
-const { disconnectHandler } = require('./socketHandelar/disconnectHandler')
-const { newConnectionHandler } = require('./socketHandelar/newConnectionHandelar')
+const verifyTokenSocket = require('./middlewares/authSocket');
+const { disconnectHandler } = require('./socketHandelar/disconnectHandler');
+const { newConnectionHandler } = require('./socketHandelar/newConnectionHandelar');
+const { directMessageHandler } = require("./socketHandelar/directMessageHandler");
 const serverStore = require('./serverStore');
 
 const registerSocketServer = (server) => {
@@ -27,8 +28,13 @@ const registerSocketServer = (server) => {
         console.log("User connected");
         console.log(socket.id)
 
-        newConnectionHandler(socket, io)
-        emitOnlineUser()
+        newConnectionHandler(socket, io);
+        emitOnlineUser();
+
+        socket.on("direct-message", (data) => {
+            directMessageHandler(socket, data);
+        });
+
         socket.on("disconnect", () => {
             disconnectHandler(socket)
         })
