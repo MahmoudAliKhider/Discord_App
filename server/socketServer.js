@@ -22,6 +22,8 @@ const registerSocketServer = (server) => {
         io.emit("online-users", { onlineUsers })
     }
 
+    // connection
+    
     io.on("connection", (socket) => {
         console.log("User connected");
         console.log(socket.id)
@@ -37,6 +39,7 @@ const registerSocketServer = (server) => {
         emitOnlineUser()
     }, [1000 * 8])
 }
+
 
 module.exports = {
     registerSocketServer
