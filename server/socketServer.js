@@ -23,7 +23,6 @@ const registerSocketServer = (server) => {
     }
 
     // connection
-    
     io.on("connection", (socket) => {
         console.log("User connected");
         console.log(socket.id)
