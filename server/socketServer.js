@@ -12,21 +12,30 @@ const registerSocketServer = (server) => {
     })
 
     serverStore.setSocketServerInstance(io);
-    
+
     io.use((socket, next) => {
         verifyTokenSocket(socket, next)
     })
+
+    const emitOnlineUser = () => {
+        const onlineUsers = serverStore.getOnlineUser();
+        io.emit("online-users", { onlineUsers })
+    }
 
     io.on("connection", (socket) => {
         console.log("User connected");
         console.log(socket.id)
 
         newConnectionHandler(socket, io)
-
+        emitOnlineUser()
         socket.on("disconnect", () => {
             disconnectHandler(socket)
         })
     })
+
+    setInterval(() => {
+        emitOnlineUser()
+    }, [1000 * 8])
 }
 
 module.exports = {

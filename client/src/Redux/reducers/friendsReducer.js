@@ -23,7 +23,7 @@ const reducer = (state = initState, action) => {
         case friendsActions.SET_ONLINE_USER:
             return {
                 ...state,
-                onlineUser: action.onlineUser
+                onlineUsers: action.onlineUsers
             }
 
         default:

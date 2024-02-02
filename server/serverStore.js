@@ -2,11 +2,11 @@ const connectedUser = new Map();
 
 let io = null;
 
-const setSocketServerInstance = (ioInstance)=>{
-   io = ioInstance
+const setSocketServerInstance = (ioInstance) => {
+    io = ioInstance
 }
 
-const getSocketServerInstance = ()=>{
+const getSocketServerInstance = () => {
     return io;
 }
 
@@ -33,10 +33,21 @@ const getActionConnections = (userId) => {
     return activeConnections;
 }
 
+const getOnlineUser = () => {
+    const onlineUser = [];
+
+    connectedUser.forEach((value, key) => {
+        onlineUser.push({ socketId: key, userId: value.userId })
+    })
+
+    return onlineUser;
+}
+
 module.exports = {
     addNewConnectedUesr,
     removeConnectedUser,
     getActionConnections,
     setSocketServerInstance,
     getSocketServerInstance,
+    getOnlineUser
 }
