@@ -1,8 +1,8 @@
 const verifyTokenSocket = require('./middlewares/authSocket');
 const { disconnectHandler } = require('./socketHandelar/disconnectHandler');
 const { newConnectionHandler } = require('./socketHandelar/newConnectionHandelar');
-const { directMessageHandler } = require("./socketHandelar/directMessageHandler");
 const serverStore = require('./serverStore');
+const directMessageHandler = require('./socketHandelar/directMessageHandler');
 
 const registerSocketServer = (server) => {
     const io = require('socket.io')(server, {
