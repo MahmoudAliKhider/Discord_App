@@ -14,6 +14,8 @@ const FriendsListItem = ({ id, username, isOnline }) => {
     const handelChooseActiveConversation = () => {
         action.setChosenChatDetails({ id: id, name: username }, chatTypes.DIRECT);
     }
+
+
     return (
         <Button
             onClick={handelChooseActiveConversation}

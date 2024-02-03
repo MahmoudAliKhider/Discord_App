@@ -1,30 +1,27 @@
-import React from 'react'
-import { styled } from '@mui/system';
-import { useSelector } from "react-redux"
-import WelcomMessage from './WelcomMessage';
-import MessageContent from './MessageContent';
+import React from "react";
+import { styled } from "@mui/system";
+import { useSelector } from "react-redux";
+import WelcomeMessage from "./WelcomMessage";
+import MessengerContent from "./MessageContent";
 
-const MainContainer = styled('dev')({
+const MainContainer = styled("div")({
   flexGrow: 1,
   backgroundColor: "#36393f",
   marginTop: "48px",
   display: "flex",
 });
 
-const Messanger = () => {
+const Messenger = () => {
   const chosenChatDetails = useSelector((state) => state.chat.chosenChatDetails);
-
   return (
     <MainContainer>
-      {
-        !chosenChatDetails ? (
-          <WelcomMessage />
-        ) : (
-          <MessageContent chosenChatDetails={chosenChatDetails} />
-        )
-      }
+      {!chosenChatDetails ? (
+        <WelcomeMessage />
+      ) : (
+        <MessengerContent  chosenChatDetails={chosenChatDetails}/>
+      )}
     </MainContainer>
-  )
-}
+  );
+};
 
-export default Messanger
+export default Messenger;

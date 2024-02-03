@@ -4,10 +4,10 @@ const serverStore = require("../../serverStore");
 const updateChatHistory = async (conversationId, toSpecifiedSocketId = null) => {
     const conversation = await Conversation.findById(conversationId).populate({
         path: "messages",
-        model: "Model",
+        model: "Message",
         populate: {
             path: "author",
-            model: "Model",
+            model: "User",
             select: "username _id",
         }
     });
@@ -24,7 +24,7 @@ const updateChatHistory = async (conversationId, toSpecifiedSocketId = null) => 
 
         conversation.participants.forEach((userId) => {
             const activeConnection = serverStore.getActionConnections(
-                userId.toString(),
+                userId.toString()
             );
 
             activeConnection.forEach((socketId) => {
