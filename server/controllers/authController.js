@@ -16,7 +16,8 @@ exports.register = async (req, res) => {
         const user = await User.create({
             username,
             mail: mail.toLowerCase(),
-            password: encryptPassword
+            password: encryptPassword,
+            _id: user._id,
         });
 
         const token = jwt.sign(
@@ -63,7 +64,8 @@ exports.login = async (req, res) => {
                 userDetails: {
                     mail: user.mail,
                     token: token,
-                    username: user.username
+                    username: user.username,
+                    _id: user._id
                 }
             })
         }
