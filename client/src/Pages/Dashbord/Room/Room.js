@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { styled } from "@mui/system";
 import ResizeRoomButton from "./ResizeRoomButton"
+import VideosContainer from './VideosContainer';
+import RoomButton from './RoomButton';
 const MainContainer = styled('div')({
     position: 'absolute',
     borderRadius: "5px",
@@ -35,6 +37,9 @@ export const Room = () => {
         <MainContainer
             style={isRoomMinimized ? minimizedRoomStyle : fullScreenRoomStyle}
         >
+            <VideosContainer />
+            <RoomButton />
+
             <ResizeRoomButton
                 isRoomMinimized={isRoomMinimized}
                 handleRoomResize={roomResizeHandler}
