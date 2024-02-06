@@ -8,6 +8,7 @@ import { Logout } from "../../utils/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { getActions } from "../../Redux/actions/authAction";
 import { connectWithSocketServer } from "../../realtimeCommunication/socketConnection";
+import { Room } from "./Room/Room";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -17,15 +18,17 @@ const Wrapper = styled("div")({
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { setUserDetails } = getActions(dispatch); 
+  const { setUserDetails } = getActions(dispatch);
 
+  const isUserInRoom = useSelector((state) => state.room.isUserInRoom);
+  
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
 
     if (!userDetails) {
       Logout();
     } else {
-      setUserDetails(JSON.parse(userDetails)); 
+      setUserDetails(JSON.parse(userDetails));
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
@@ -38,6 +41,7 @@ const Dashboard = () => {
       <FriendsSideBar />
       <Messenger />
       <AppBar />
+      {isUserInRoom && <Room />}
     </Wrapper>
   );
 };
