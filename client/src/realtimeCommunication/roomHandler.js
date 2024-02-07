@@ -15,8 +15,6 @@ export const newRoomCreated = (data) => {
 export const updateActiveRoom = (data) => {
     const { activeRooms } = data;
 
-    console.log(activeRooms)
-
     const friends = store.getState().friends.friends;
     const rooms = [];
 
@@ -30,4 +28,10 @@ export const updateActiveRoom = (data) => {
 
     store.dispatch(setActiveRooms(rooms));
 
+}
+
+export const joinRoom = (roomId) => {
+    store.dispatch(setRoomDetails({ roomId }));
+    store.dispatch(setOpenRoom(false, true));
+    socketConnection.joinRoom({ roomId });
 }

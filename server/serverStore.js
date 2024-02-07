@@ -1,4 +1,4 @@
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const connectedUser = new Map();
 let activeRooms = [];
@@ -59,13 +59,33 @@ const addNewActiveRoom = (userId, socketId) => {
         roomId: uuidv4(),
     }
 
-    activeRooms =[...activeRooms,newActiveRoom];
+    activeRooms = [...activeRooms, newActiveRoom];
 
     return newActiveRoom;
 };
 
-const getActiveRooms = () =>{
+const getActiveRooms = () => {
     return [...activeRooms];
+}
+
+const getActiveRoom = (roomId) => {
+    const activeRoom = activeRooms.find(
+        (activeRoom) => activeRoom.roomId === roomId);
+
+    return {
+        ...activeRoom,
+    };
+}
+
+const joinActiveRoom = (roomId, newParticipant) => {
+    const room = activeRooms.find((room) => room.roomId === roomId);
+    activeRooms = activeRooms.filter((room) => room.roomId !== roomId);
+
+    const updateRoom = {
+        ...room,
+        participants: [...room.participants, newParticipant],
+    }
+    activeRooms.push(updateRoom);
 }
 
 module.exports = {
@@ -77,4 +97,6 @@ module.exports = {
     getOnlineUser,
     addNewActiveRoom,
     getActiveRooms,
+    getActiveRoom,
+    joinActiveRoom,
 }

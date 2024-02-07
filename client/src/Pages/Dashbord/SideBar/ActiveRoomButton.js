@@ -1,6 +1,7 @@
 import { Button, Toolbar, Tooltip } from '@mui/material';
 import Avatar from "./../../../components/Avatar"
 import React from 'react'
+import * as roomHanler from '../../../realtimeCommunication/roomHandler';
 
 const ActiveRoomButton = ({
     creatorUsername,
@@ -10,8 +11,9 @@ const ActiveRoomButton = ({
 }) => {
 
     const handleJoinActiveRoom = () => {
-        if (amountOfParticipants > 4) {
+        if (amountOfParticipants < 4) {
             // join the room
+            roomHanler.joinRoom(roomId)
         }
     }
     const activeRoomButtonDisabled = amountOfParticipants > 3;

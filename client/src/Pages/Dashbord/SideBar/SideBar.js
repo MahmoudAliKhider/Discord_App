@@ -16,7 +16,7 @@ const MainContainer = styled('div')({
 const SideBar = () => {
     const activeRooms = useSelector((state) => state.room.activeRooms);
     const isUserInRoom = useSelector((state) => state.room.isUserInRoom);
-
+  
     return (
         <MainContainer>
             <MainPageButton />
