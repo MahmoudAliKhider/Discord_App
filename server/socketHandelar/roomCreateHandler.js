@@ -1,4 +1,5 @@
 const serverStore = require('../serverStore');
+const roomsUpdate = require('./updates/rooms');
 
 const roomCreateHandler = (socket) => {
     console.log("handle room create");
@@ -11,6 +12,8 @@ const roomCreateHandler = (socket) => {
     socket.emit("room-create", {
         roomDetails,
     })
+
+    roomsUpdate.updateRooms();
 }
 
 module.exports = roomCreateHandler;
