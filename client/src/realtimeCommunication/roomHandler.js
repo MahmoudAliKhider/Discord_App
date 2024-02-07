@@ -1,4 +1,4 @@
-import { setOpenRoom, setRoomDetails, setActiveRoom } from '../Redux/actions/roomAction';
+import { setOpenRoom, setRoomDetails, setActiveRooms } from '../Redux/actions/roomAction';
 import store from '../Redux/store';
 import * as socketConnection from "./socketConnection";
 
@@ -15,17 +15,19 @@ export const newRoomCreated = (data) => {
 export const updateActiveRoom = (data) => {
     const { activeRooms } = data;
 
+    console.log(activeRooms)
+
     const friends = store.getState().friends.friends;
     const rooms = [];
 
     activeRooms.forEach((room) => {
         friends.forEach((f) => {
-            if (f.id === room.creatorId) {
+            if (f.id === room.roomCreator.userId) {
                 rooms.push({ ...room, creatorUsername: f.username })
             }
         })
     });
 
-    store.dispatch(setActiveRoom(rooms));
+    store.dispatch(setActiveRooms(rooms));
 
 }

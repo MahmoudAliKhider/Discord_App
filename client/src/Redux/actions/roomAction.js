@@ -26,7 +26,7 @@ export const setRoomDetails = (roomDetails) => {
     }
 }
 
-export const setActiveRoom = (activeRooms) => {
+export const setActiveRooms = (activeRooms) => {
     return {
         type: roomActions.SET_ACTIVE_ROOMS,
         activeRooms,

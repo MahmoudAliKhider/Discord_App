@@ -46,7 +46,7 @@ const getOnlineUser = () => {
 
 const addNewActiveRoom = (userId, socketId) => {
     const newActiveRoom = {
-        roomAcutive: {
+        roomCreator: {
             userId,
             socketId
         },
