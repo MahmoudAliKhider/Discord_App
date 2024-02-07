@@ -1,10 +1,14 @@
 import { setOpenRoom, setRoomDetails, setActiveRooms } from '../Redux/actions/roomAction';
 import store from '../Redux/store';
 import * as socketConnection from "./socketConnection";
+import * as webRTChandler from "./webRTChandler";
 
 export const createNewRoom = () => {
-    store.dispatch(setOpenRoom(true, true));
-    socketConnection.createNewRoom();
+    const successCalbackFunc = () => {
+        store.dispatch(setOpenRoom(true, true));
+        socketConnection.createNewRoom();
+    }
+    webRTChandler.getLocalStreamPreview(false, successCalbackFunc)
 }
 
 export const newRoomCreated = (data) => {
