@@ -2,6 +2,7 @@ import io from "socket.io-client";
 import { setPendingFriendsInvitations, setFriends, setOnlineUsers } from "../Redux/actions/friendsAction";
 import store from "../Redux/store";
 import { updateDirectChatHistoryActive } from "../utils/chat";
+import roomHandler from "./roomHandler";
 
 let socket = null;
 
@@ -39,8 +40,7 @@ export const connectWithSocketServer = (userDetails) => {
     })
 
     socket.on("room-create", (data) => {
-        console.log("Room created")
-        console.log(data);
+        roomHandler.newRoomCreated(data)
     })
 }
 
