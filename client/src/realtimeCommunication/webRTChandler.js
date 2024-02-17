@@ -1,6 +1,8 @@
-import { setLocalStream } from "../Redux/actions/roomAction";
-import store from "../Redux/store";
 import Peer from "simple-peer";
+
+import { setLocalStream } from "../Redux/actions/roomAction";
+import { signalPeerData } from './socketConnection';
+import store from "../Redux/store";
 
 const getConfiguration = () => {
     const turnIceServers = null;
@@ -11,7 +13,7 @@ const getConfiguration = () => {
         return {
             iceServers: [
                 {
-                    urls: "stue:stue.l.google.com:19302"
+                    urls: "stun:stun.l.google.com:19302"
                 }
             ]
         }
@@ -44,9 +46,10 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     const localStream = store.getState().room.localStream;
 
     if (isInitiator) {
+        console.log('Initiator')
 
     } else {
-
+        console.log(" not initiator")
     }
     peers[connUserSocketId] = new Peer({
         initiator: isInitiator,
@@ -54,16 +57,24 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
         stream: localStream,
     });
 
-    peers[connUserSocketId].on('signal', data =>{
+    peers[connUserSocketId].on('signal', (data) => {
         const signalData = {
-            signal : data,
-            connUserSocketId : connUserSocketId,
+            signal: data,
+            connUserSocketId: connUserSocketId,
         }
 
-        // socketConnection.signalPeerData(signalData);
+        signalPeerData(signalData);
     })
 
-    peers[connUserSocketId].on("stream" , (remoteStream)=>{
-        
+    peers[connUserSocketId].on("stream", (remoteStream) => {
+
+        console.log("remotestream");
     })
+}
+
+export const handleSignalingData = (data) =>{
+    const { connUserSocketId , signal} = data;
+    if(peers[connUserSocketId]){
+        peers[connUserSocketId].signal(signal);
+    }
 }

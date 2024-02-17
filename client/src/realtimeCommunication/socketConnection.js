@@ -3,7 +3,7 @@ import { setPendingFriendsInvitations, setFriends, setOnlineUsers } from "../Red
 import store from "../Redux/store";
 import { updateDirectChatHistoryActive } from "../utils/chat";
 import { newRoomCreated, updateActiveRoom } from "./roomHandler";
-import { prepareNewPeerConnection } from "./webRTChandler";
+import { handleSignalingData, prepareNewPeerConnection } from "./webRTChandler";
 
 let socket = null;
 
@@ -50,8 +50,17 @@ export const connectWithSocketServer = (userDetails) => {
 
     socket.on("conn-prepare", (data) => {
         const { connUserSocketId } = data;
-        prepareNewPeerConnection(data, false);
-        socket.emit('conn-init', {connUserSocketId: connUserSocketId});
+        prepareNewPeerConnection(connUserSocketId, false);
+        socket.emit('conn-init', { connUserSocketId: connUserSocketId });
+    })
+
+    socket.on("conn-init", (data) => {
+        const { connUserSocketId } = data;
+        prepareNewPeerConnection(connUserSocketId, true)
+    })
+
+    socket.on("conn-signal", (data) => {
+        handleSignalingData(data);
     })
 }
 
@@ -75,3 +84,7 @@ export const joinRoom = (data) => {
 export const leaveRoom = (data) => {
     socket.emit("room-leave", data);
 };
+
+export const signalPeerData = (data) => {
+    socket.emit('conn-signal', data);
+}
