@@ -3,6 +3,7 @@ import { setPendingFriendsInvitations, setFriends, setOnlineUsers } from "../Red
 import store from "../Redux/store";
 import { updateDirectChatHistoryActive } from "../utils/chat";
 import { newRoomCreated, updateActiveRoom } from "./roomHandler";
+import { prepareNewPeerConnection } from "./webRTChandler";
 
 let socket = null;
 
@@ -48,8 +49,9 @@ export const connectWithSocketServer = (userDetails) => {
     })
 
     socket.on("conn-prepare", (data) => {
-        console.log("prepared connection")
-        console.log(data);
+        const { connUserSocketId } = data;
+        prepareNewPeerConnection(data, false);
+        socket.emit('conn-init', {connUserSocketId: connUserSocketId});
     })
 }
 
