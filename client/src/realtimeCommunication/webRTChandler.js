@@ -10,17 +10,14 @@ const defaultConstraints = {
     audio: true,
 }
 
-export const getLocalStreamPreview = (onlyAudio = false, callbackFunc) => {
-
+export const getLocalStreamPreview = async (onlyAudio = false, callbackFunc) => {
     const constraints = onlyAudio ? onlyAudioConstrains : defaultConstraints;
 
-    navigator.mediaDevices.getUserMedia(constraints)
-        .then((stream) => {
-            store.dispatch(setLocalStream(stream));
-            callbackFunc();
-        })
-        .catch((error) => {
-            console.error('Error getting user media:', error);
-        });
-
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        store.dispatch(setLocalStream(stream));
+        callbackFunc();
+    } catch (error) {
+        console.error('Error getting user media:', error);
+    }
 }

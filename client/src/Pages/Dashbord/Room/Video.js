@@ -7,7 +7,7 @@ const MainContainer = styled("div")({
     backgroundColor: "black",
     borderRadius: "8px",
 });
-const VodeoEl = styled("div")({
+const VodeoEl = styled("video")({
     width: "100%",
     height: "100%",
 });
