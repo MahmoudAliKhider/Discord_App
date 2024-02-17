@@ -9,7 +9,8 @@ const roomJoinHandler = require("./socketHandelar/roomJoinHandler");
 const roomLeaveHandler = require('./socketHandelar/roomLeaveHandler');
 
 const registerSocketServer = (server) => {
-    const io = require('socket.io')(server, {
+    const socketIO = require('socket.io');
+    const io = socketIO(server, {
         cors: {
             origin: "*",
             methods: ["GET", "POST"],
