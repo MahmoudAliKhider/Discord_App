@@ -1,6 +1,6 @@
 import Peer from "simple-peer";
 
-import { setLocalStream } from "../Redux/actions/roomAction";
+import { setLocalStream, setRemoteStreams } from "../Redux/actions/roomAction";
 import { signalPeerData } from './socketConnection';
 import store from "../Redux/store";
 
@@ -68,7 +68,8 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
 
     peers[connUserSocketId].on("stream", (remoteStream) => {
 
-        console.log("remotestream");
+        remoteStream.connUserSocketId = connUserSocketId;
+        addNewRemoteStream(remoteStream);
     })
 }
 
@@ -77,4 +78,11 @@ export const handleSignalingData = (data) =>{
     if(peers[connUserSocketId]){
         peers[connUserSocketId].signal(signal);
     }
+}
+
+const addNewRemoteStream = (remoteStream) =>{
+ const remoteStreams= store.getState().room.remoteStreams;
+ const newRemoteStreams = [...remoteStreams , remoteStream];
+
+ store.dispatch(setRemoteStreams(newRemoteStreams))
 }
