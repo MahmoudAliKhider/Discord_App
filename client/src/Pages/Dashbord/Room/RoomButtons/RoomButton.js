@@ -22,7 +22,7 @@ const RoomButton = () => {
     return (
         <MainContainer>
             <ScreenShareButton />
-            <MicButton />
+            <MicButton localStream={localStream}/>
             <CloseRoomButtom />
             <CameraButtom localStream={localStream}/>
         </MainContainer>
