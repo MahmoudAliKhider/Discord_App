@@ -1,4 +1,4 @@
-import { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream, setRemoteStreams } from '../Redux/actions/roomAction';
+import { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream, setRemoteStreams, setScreenSharingStream } from '../Redux/actions/roomAction';
 import store from '../Redux/store';
 import * as socketConnection from "./socketConnection";
 import { closeAllConnection, getLocalStreamPreview } from './webRTChandler';
@@ -57,6 +57,11 @@ export const leaveRoom = () => {
         store.dispatch(setLocalStream(null))
     }
 
+    const screenSharingStream = store.getState().room.screenSharingStream;
+    if(screenSharingStream){
+        screenSharingStream.getTracks().forEach((track) => track.stop());
+        store.dispatch(setScreenSharingStream(null))
+    }
     store.dispatch(setRemoteStreams([]));
     closeAllConnection();
 

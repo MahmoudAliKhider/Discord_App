@@ -35,7 +35,7 @@ const ScreenShareButton = () => {
       }
     } else {
       switchOutgoingTracks(localStream)
-      screenSharingStream.getTrack().forEach((t) => t.stop());
+      screenSharingStream.getTracks().forEach((t) => t.stop());
       setScreenSharingStream(null)
     }
   }
