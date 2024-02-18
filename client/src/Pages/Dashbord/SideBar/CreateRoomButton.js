@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import * as roomhandler from "./../../../realtimeCommunication/roomHandler";
 
-const CreateRoomButton = () => {
+const CreateRoomButton = ({ isUserInRoom }) => {
 
     const createNewRoomHandler = () => {
         roomhandler.createNewRoom();
@@ -12,6 +12,7 @@ const CreateRoomButton = () => {
 
     return (
         <Button
+            disabled={isUserInRoom}
             onClick={createNewRoomHandler}
             style={
                 {

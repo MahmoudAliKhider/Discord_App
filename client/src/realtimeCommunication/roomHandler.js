@@ -28,12 +28,19 @@ export const updateActiveRoom = (data) => {
     const friends = store.getState().friends.friends;
     const rooms = [];
 
+    const userId = store.getState().auth.userDetails?._id;
     activeRooms.forEach((room) => {
-        friends.forEach((f) => {
-            if (f.id === room.roomCreator.userId) {
-                rooms.push({ ...room, creatorUsername: f.username })
-            }
-        })
+
+        const isRoomCreatedByMe = room.roomCreator.userId === userId;
+        if (isRoomCreatedByMe) {
+            rooms.push({ ...room, creatorUsername: 'Me' })
+        } else {
+            friends.forEach((f) => {
+                if (f.id === room.roomCreator.userId) {
+                    rooms.push({ ...room, creatorUsername: f.username })
+                }
+            })
+        }
     });
 
     store.dispatch(setActiveRooms(rooms));
@@ -63,7 +70,7 @@ export const leaveRoom = () => {
     }
 
     const screenSharingStream = store.getState().room.screenSharingStream;
-    if(screenSharingStream){
+    if (screenSharingStream) {
         screenSharingStream.getTracks().forEach((track) => track.stop());
         store.dispatch(setScreenSharingStream(null))
     }
