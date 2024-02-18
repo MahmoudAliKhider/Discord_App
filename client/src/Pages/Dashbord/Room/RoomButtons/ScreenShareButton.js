@@ -4,6 +4,7 @@ import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 import { useDispatch, useSelector } from 'react-redux';
 import { getActions } from '../../../../Redux/actions/roomAction';
+import { switchOutgoingTracks } from '../../../../realtimeCommunication/webRTChandler';
 
 
 const constraints = {
@@ -30,8 +31,10 @@ const ScreenShareButton = () => {
 
       if (stream) {
         setScreenSharingStream(stream)
+        switchOutgoingTracks(stream)
       }
     } else {
+      switchOutgoingTracks(localStream)
       screenSharingStream.getTrack().forEach((t) => t.stop());
       setScreenSharingStream(null)
     }
