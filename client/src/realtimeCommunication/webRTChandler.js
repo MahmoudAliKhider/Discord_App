@@ -73,16 +73,43 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     })
 }
 
-export const handleSignalingData = (data) =>{
-    const { connUserSocketId , signal} = data;
-    if(peers[connUserSocketId]){
+export const handleSignalingData = (data) => {
+    const { connUserSocketId, signal } = data;
+    if (peers[connUserSocketId]) {
         peers[connUserSocketId].signal(signal);
     }
 }
 
-const addNewRemoteStream = (remoteStream) =>{
- const remoteStreams= store.getState().room.remoteStreams;
- const newRemoteStreams = [...remoteStreams , remoteStream];
+const addNewRemoteStream = (remoteStream) => {
+    const remoteStreams = store.getState().room.remoteStreams;
+    const newRemoteStreams = [...remoteStreams, remoteStream];
 
- store.dispatch(setRemoteStreams(newRemoteStreams))
+    store.dispatch(setRemoteStreams(newRemoteStreams))
+}
+
+export const closeAllConnection = () => {
+    Object.entries(peers).forEach((mappedObject) => {
+        const connUserSocketId = mappedObject[0];
+        if (peers[connUserSocketId]) {
+            peers[connUserSocketId].destroy();
+
+            delete peers[connUserSocketId];
+        }
+    })
+}
+
+export const handleParticipantLeftRoom = (data) => {
+    const { connUserSocketId } = data;
+    if (peers[connUserSocketId]) {
+        peers[connUserSocketId].destroy();
+
+        delete peers[connUserSocketId];
+    }
+    const remoteStreams = store.getState().room.remoteStreams;
+
+    const newRemoteStreams = remoteStreams.filter((remoteStream) =>
+        remoteStream.connUserSocketId !== connUserSocketId
+    )
+
+    store.dispatch(setRemoteStreams(newRemoteStreams))
 }

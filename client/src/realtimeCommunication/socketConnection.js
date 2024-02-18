@@ -3,7 +3,7 @@ import { setPendingFriendsInvitations, setFriends, setOnlineUsers } from "../Red
 import store from "../Redux/store";
 import { updateDirectChatHistoryActive } from "../utils/chat";
 import { newRoomCreated, updateActiveRoom } from "./roomHandler";
-import { handleSignalingData, prepareNewPeerConnection } from "./webRTChandler";
+import { handleParticipantLeftRoom, handleSignalingData, prepareNewPeerConnection } from "./webRTChandler";
 
 let socket = null;
 
@@ -61,6 +61,11 @@ export const connectWithSocketServer = (userDetails) => {
 
     socket.on("conn-signal", (data) => {
         handleSignalingData(data);
+    })
+
+    socket.on("room-participant-left", (data) => {
+        console.log("user Left Room")
+        handleParticipantLeftRoom(data);
     })
 }
 

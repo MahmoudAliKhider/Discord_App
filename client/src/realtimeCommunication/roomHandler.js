@@ -1,7 +1,8 @@
-import { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream } from '../Redux/actions/roomAction';
+import { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream, setRemoteStreams } from '../Redux/actions/roomAction';
 import store from '../Redux/store';
 import * as socketConnection from "./socketConnection";
-import * as webRTChandler from "./webRTChandler";
+import { closeAllConnection, getLocalStreamPreview } from './webRTChandler';
+// import * as webRTChandler from "./webRTChandler";
 
 export const createNewRoom = () => {
     const successCalbackFunc = () => {
@@ -10,7 +11,7 @@ export const createNewRoom = () => {
     }
     const audioOnly = store.getState().room.audioOnly;
 
-    webRTChandler.getLocalStreamPreview(audioOnly, successCalbackFunc)
+    getLocalStreamPreview(audioOnly, successCalbackFunc)
 }
 
 export const newRoomCreated = (data) => {
@@ -44,7 +45,7 @@ export const joinRoom = (roomId) => {
     }
     const audioOnly = store.getState().room.audioOnly;
 
-    webRTChandler.getLocalStreamPreview(audioOnly, successCalbackFunc)
+    getLocalStreamPreview(audioOnly, successCalbackFunc)
 }
 
 export const leaveRoom = () => {
@@ -55,6 +56,10 @@ export const leaveRoom = () => {
         localStream.getTracks().forEach(track => track.stop());
         store.dispatch(setLocalStream(null))
     }
+
+    store.dispatch(setRemoteStreams([]));
+    closeAllConnection();
+
     socketConnection.leaveRoom({ roomId });
     store.dispatch(setRoomDetails(null));
     store.dispatch(setOpenRoom(false, false))
